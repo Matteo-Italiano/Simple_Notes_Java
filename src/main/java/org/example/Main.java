@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         String username;
+        List<Ordner> alleOrdner = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -15,17 +16,18 @@ public class Main {
 
         User user = new User(username);
 
-        checkinstanz(username, scanner);
+        checkinstanz(username, scanner, alleOrdner);
     }
 
-    static void checkinstanz(String username, Scanner scanner) {
+    static void checkinstanz(String username, Scanner scanner, List<Ordner> alleOrdner) {
+        int ordnerZahl;
         int auswahl;
-        List<String> alleOrdner = new ArrayList<>();
+
 
         String options = String.format("Was möchtest du machen %s? %s %s %s", username,
-                                        "\n 1: Benutzer wechseln",
-                                        "\n 2: Ordner erstellen",
-                                        "\n 3: Notiz erstellen");
+                "\n 1: Benutzer wechseln",
+                "\n 2: Ordner erstellen",
+                "\n 3: Notiz erstellen");
         System.out.println(options);
         auswahl = scanner.nextInt();
         scanner.nextLine();
@@ -33,7 +35,7 @@ public class Main {
         if (auswahl == 1) {
             System.out.print("Gebe deinen Namen ein: ");
             username = scanner.nextLine();
-            checkinstanz(username, scanner);
+            checkinstanz(username, scanner, alleOrdner);
 
         } else if (auswahl == 2) {
             String ordnername;
@@ -42,37 +44,61 @@ public class Main {
 
             Ordner ordner = new Ordner(ordnername);
 
-            alleOrdner.add(ordnername);
-            checkinstanz(username, scanner);
+            alleOrdner.add(ordner);
+            checkinstanz(username, scanner, alleOrdner);
 
 
         } else if (auswahl == 3) {
-            System.out.println(alleOrdner);
             // check if there are any ordner Objects
 
-            
+            if (alleOrdner.isEmpty()) {
+                System.out.print("Es gibt keine Ordner, bitte erstelle zuerst ein Ordner! ");
+            } else {
 
+                int counter = 1;
 
+                for (Ordner ordner : alleOrdner) {
+                    System.out.println(counter + ":" + " " + ordner.getName());
+                    counter = counter + 1;
+                }
 
+                System.out.println("Welchen Ordner möchtest du auswählen?");
 
+                ordnerZahl = scanner.nextInt();
 
+                int ausgewaehlterOrdnerIndex = ordnerZahl - 1;
 
+                Ordner ausgewaehlterOrdner = alleOrdner.get(ausgewaehlterOrdnerIndex);
+                String garnichts = scanner.nextLine();
 
-            //if (alleOrdner.isEmpty()) {
-            //  System.out.println("Keine Ordner, bitte zuerst erstellen!");
-            // } else {
-            //    System.out.println("Welchen Ordner wählst du aus?");
+                System.out.print("Titel: ");
+                String titel = scanner.nextLine();
 
-        }
+                System.out.print("Text: ");
+                String text = scanner.nextLine();
 
-            // Choose which ordner you want to create Notes
+                Notiz notiz = new Notiz(titel, text);
 
-            // Create Note
+                ausgewaehlterOrdner.addNotiz(notiz);
 
+                List<Notiz> alleNotizen = new ArrayList<>();
 
+                alleNotizen = ausgewaehlterOrdner.getNotizen();
 
+                int count = 1;
 
+                for (Notiz i : alleNotizen) {
+                    System.out.println("Notiz Nr. " + count);
+                    count++;
 
+                    String fullNote = "Titel: " + i.getTitel() + "\n" +
+                            " Text: " + i.getText();
 
+                    System.out.println(fullNote);
+
+                    checkinstanz(username, scanner, alleOrdner);
+                }
+            }
         }
     }
+}

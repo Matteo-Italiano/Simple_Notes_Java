@@ -21,4 +21,9 @@ public class Ordner{
         return notizen;
     }
 
+    public String getName(){
+        return name;
+    }
+
+
 }
