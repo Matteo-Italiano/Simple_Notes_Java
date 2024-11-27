@@ -49,10 +49,10 @@ public class Main {
 
 
         } else if (auswahl == 3) {
-            // check if there are any ordner Objects
 
             if (alleOrdner.isEmpty()) {
                 System.out.print("Es gibt keine Ordner, bitte erstelle zuerst ein Ordner! ");
+                checkinstanz(username, scanner, alleOrdner);
             } else {
 
                 int counter = 1;
@@ -92,12 +92,12 @@ public class Main {
                     count++;
 
                     String fullNote = "Titel: " + i.getTitel() + "\n" +
-                            " Text: " + i.getText();
+                                      "Text: " + i.getText();
 
                     System.out.println(fullNote);
-
-                    checkinstanz(username, scanner, alleOrdner);
                 }
+
+                checkinstanz(username, scanner, alleOrdner);
             }
         }
     }
