@@ -54,10 +54,12 @@ public class User {
 
                 User user = new User(username);
                 alleUser.add(user);
+
                 user.checkinstanz(username, scanner, alleOrdner, alleUser);
             } else {
                 int benutzerindex = Integer.parseInt(benutzeroption) - 1;
                 User user = alleUser.get(benutzerindex);
+                username  = alleUser.get(benutzerindex).getName();
                 user.checkinstanz(username, scanner, alleOrdner, alleUser);
             }
 
@@ -117,7 +119,7 @@ public class User {
                     count++;
 
                     String fullNote = "Titel: " + i.getTitel() + "\n" +
-                            "Text: " + i.getText();
+                                      "Text: " + i.getText();
 
                     System.out.println(fullNote);
                 }
