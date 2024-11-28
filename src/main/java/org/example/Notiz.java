@@ -24,4 +24,13 @@ public class Notiz {
     public void setText(String text) {
         this.text = text;
     }
+
+
+    public void changeText(String newText){
+        this.text = newText;
+    }
+
+    public void changeTitle(String newTitle){
+        this.titel = newTitle;
+    }
 }

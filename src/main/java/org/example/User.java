@@ -28,13 +28,14 @@ public class User {
         System.out.println(options);
 
 
-        try {
+        if (scanner.hasNextInt()) {
             auswahl = scanner.nextInt();
             scanner.nextLine();
-        } catch (InputMismatchException e) {
-            System.out.println("Gib eine gültige Zahl ein");
+        } else {
+            System.out.println("Gib eine gültige Zahl ein.");
             scanner.nextLine();
-            currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
+            currentUser.getLast().auswahlOption(username, scanner, alleUser, currentUser);
+            return;
         }
 
 
@@ -62,12 +63,12 @@ public class User {
                 Ordner ordners = new Ordner(ordnername);
                 ordnerVonUser.add(ordners);
 
-                currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
+                currentUser.getLast().auswahlOption(username, scanner, alleUser, currentUser);
                 break;
             case 3:
                 if (ordnerVonUser.isEmpty()) {
                     System.out.println("Es gibt keine Ordner, bitte erstelle zuerst ein Ordner! ");
-                    currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
+                    currentUser.getLast().auswahlOption(username, scanner, alleUser, currentUser);
                 } else {
 
                     int counter = 1;
@@ -83,7 +84,7 @@ public class User {
                         ordnerZahl = scanner.nextInt();
                     } catch (InputMismatchException e) {
                         System.out.println("Gib eine gültige Zahl ein!");
-                        currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
+                        currentUser.getLast().auswahlOption(username, scanner, alleUser, currentUser);
                     }
 
 
@@ -96,7 +97,7 @@ public class User {
                         scanner.nextLine();
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Dieser Ordner existiert nicht, gib eine gültige Zahl ein!");
-                        currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
+                        currentUser.getLast().auswahlOption(username, scanner, alleUser, currentUser);
                     }
 
 
@@ -125,7 +126,7 @@ public class User {
 
                         System.out.println(fullNote);
                     }
-                    currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
+                    currentUser.getLast().auswahlOption(username, scanner, alleUser, currentUser);
                 }
 
                 break;
@@ -134,7 +135,7 @@ public class User {
                 return;
             default:
                 System.out.println("Ungügltige Zahl!");
-                currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
+                currentUser.getLast().auswahlOption(username, scanner, alleUser, currentUser);
         }
     }
 }
