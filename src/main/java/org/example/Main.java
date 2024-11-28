@@ -9,6 +9,7 @@ public class Main {
         String username;
         List<Ordner> alleOrdner = new ArrayList<>();
         List<User> alleUser = new ArrayList<>();
+        List<User> currentUser = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -17,7 +18,33 @@ public class Main {
 
         User user = new User(username);
         alleUser.add(user);
+        currentUser.add(user);
 
-        user.checkinstanz(username, scanner, alleOrdner, alleUser);
+        checkinstanz(username, scanner, alleUser, currentUser);
+    }
+
+    static void checkinstanz(String username, Scanner scanner, List<User> alleUser, List<User> currentUser) {
+        User user = currentUser.get(currentUser.size() - 1);
+        user.auswahlOption(username, scanner, alleUser, currentUser);
+
+    }
+
+    static void userSwitch(String username, String benutzeroption, Scanner scanner, List<User> alleUser, List<User> currentUser) {
+        if (benutzeroption.toString().toUpperCase().equals("N")) {
+            System.out.println("Gib einen Namen ein: ");
+            username = scanner.nextLine();
+
+            User newUser = new User(username);
+            alleUser.add(newUser);
+            currentUser.add(newUser);
+
+            checkinstanz(username, scanner, alleUser, currentUser);
+        } else {
+            int benutzerindex = Integer.parseInt(benutzeroption) - 1;
+            User newUser = alleUser.get(benutzerindex);
+            username = alleUser.get(benutzerindex).getName();
+            currentUser.add(newUser);
+            checkinstanz(username, scanner, alleUser, currentUser);
+        }
     }
 }

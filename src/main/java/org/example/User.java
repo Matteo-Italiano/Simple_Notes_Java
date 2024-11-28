@@ -6,10 +6,10 @@ import java.util.Scanner;
 
 public class User {
     private String name;
-    private List<Ordner> ordner;
+    private List<Ordner> ordnerVonUser;
 
     public User(String name) {
-        ordner = new ArrayList<Ordner>();
+        ordnerVonUser = new ArrayList<Ordner>();
         this.name = name;
     }
 
@@ -18,13 +18,12 @@ public class User {
     }
 
     public List<Ordner> getAllOrdner() {
-        return ordner;
+        return ordnerVonUser;
     }
 
-    public void checkinstanz(String username, Scanner scanner, List<Ordner> alleOrdner, List<User> alleUser){
-        int ordnerZahl;
+    public void auswahlOption(String username, Scanner scanner, List<User> alleUser, List<User> currentUser){
         int auswahl;
-
+        int ordnerZahl;
 
         String options = String.format("Was möchtest du machen %s? %s %s %s", username,
                 "\n 1: Benutzer wechseln",
@@ -34,35 +33,19 @@ public class User {
         auswahl = scanner.nextInt();
         scanner.nextLine();
 
-        if (auswahl == 1) {
+        if (auswahl == 1){
             int count = 1;
             System.out.println("Auf welchen Benutzer möchtest du wechseln?");
 
             for (User i : alleUser) {
                 System.out.println(count + ": " + i.getName());
-                count ++;
+                count++;
             }
 
             System.out.println(" \n N: Neuen Benutzer erstellen");
-
             String benutzeroption = scanner.nextLine();
 
-
-            if (benutzeroption.toString().toUpperCase().equals("N")){
-                System.out.println("Gib einen Namen ein: ");
-                username = scanner.nextLine();
-
-                User user = new User(username);
-                alleUser.add(user);
-
-                user.checkinstanz(username, scanner, alleOrdner, alleUser);
-            } else {
-                int benutzerindex = Integer.parseInt(benutzeroption) - 1;
-                User user = alleUser.get(benutzerindex);
-                username  = alleUser.get(benutzerindex).getName();
-                user.checkinstanz(username, scanner, alleOrdner, alleUser);
-            }
-
+            Main.userSwitch(username, benutzeroption, scanner, alleUser, currentUser);
 
         } else if (auswahl == 2) {
             String ordnername;
@@ -70,21 +53,20 @@ public class User {
             ordnername = scanner.nextLine();
 
             Ordner ordner = new Ordner(ordnername);
+            ordnerVonUser.add(ordner);
 
-            alleOrdner.add(ordner);
-            checkinstanz(username, scanner, alleOrdner, alleUser);
-
+            currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
 
         } else if (auswahl == 3) {
 
-            if (alleOrdner.isEmpty()) {
+            if (ordnerVonUser.isEmpty()) {
                 System.out.print("Es gibt keine Ordner, bitte erstelle zuerst ein Ordner! ");
-                checkinstanz(username, scanner, alleOrdner, alleUser);
+                currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
             } else {
 
                 int counter = 1;
 
-                for (Ordner ordner : alleOrdner) {
+                for (Ordner ordner : ordnerVonUser) {
                     System.out.println(counter + ":" + " " + ordner.getName());
                     counter = counter + 1;
                 }
@@ -95,7 +77,7 @@ public class User {
 
                 int ausgewaehlterOrdnerIndex = ordnerZahl - 1;
 
-                Ordner ausgewaehlterOrdner = alleOrdner.get(ausgewaehlterOrdnerIndex);
+                Ordner ausgewaehlterOrdner = ordnerVonUser.get(ausgewaehlterOrdnerIndex);
                 String garnichts = scanner.nextLine();
 
                 System.out.print("Titel: ");
@@ -119,15 +101,34 @@ public class User {
                     count++;
 
                     String fullNote = "Titel: " + i.getTitel() + "\n" +
-                                      "Text: " + i.getText();
+                            "Text: " + i.getText();
 
                     System.out.println(fullNote);
                 }
 
-                checkinstanz(username, scanner, alleOrdner, alleUser);
+                currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
             }
         }
+
+
+
+
+
+
     }
 
 
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
