@@ -40,7 +40,16 @@ public class Main {
 
             checkinstanz(username, scanner, alleUser, currentUser);
         } else {
-            int benutzerindex = Integer.parseInt(benutzeroption) - 1;
+
+            int benutzerindex = 0;
+
+            try {
+                benutzerindex = Integer.parseInt(benutzeroption) - 1;
+            } catch (NumberFormatException e) {
+                System.out.println("Gib eine gültige Zahl ein: ");
+                currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
+            }
+
             User newUser = alleUser.get(benutzerindex);
             username = alleUser.get(benutzerindex).getName();
             currentUser.add(newUser);

@@ -17,7 +17,7 @@ public class User {
 
     public void auswahlOption(String username, Scanner scanner, List<User> alleUser, List<User> currentUser) {
         int auswahl = 0;
-        int ordnerZahl;
+        int ordnerZahl = 0;
 
         String options = String.format("Was möchtest du machen %s? %s %s %s %s", username,
                 "\n 1: Benutzer wechseln",
@@ -79,12 +79,26 @@ public class User {
 
                     System.out.println("Welchen Ordner möchtest du auswählen?");
 
-                    ordnerZahl = scanner.nextInt();
+                    try {
+                        ordnerZahl = scanner.nextInt();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Gib eine gültige Zahl ein!");
+                        currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
+                    }
+
 
                     int ausgewaehlterOrdnerIndex = ordnerZahl - 1;
 
                     Ordner ausgewaehlterOrdner = ordnerVonUser.get(ausgewaehlterOrdnerIndex);
-                    scanner.nextLine();
+
+                    try {
+                        ausgewaehlterOrdner = ordnerVonUser.get(ausgewaehlterOrdnerIndex);
+                        scanner.nextLine();
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Dieser Ordner existiert nicht, gib eine gültige Zahl ein!");
+                        currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
+                    }
+
 
                     System.out.print("Titel: ");
                     String titel = scanner.nextLine();
@@ -120,6 +134,7 @@ public class User {
                 return;
             default:
                 System.out.println("Ungügltige Zahl!");
+                currentUser.get(currentUser.size() - 1).auswahlOption(username, scanner, alleUser, currentUser);
         }
     }
 }
