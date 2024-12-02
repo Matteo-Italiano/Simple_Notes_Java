@@ -25,7 +25,7 @@ public class Ordner{
         return name;
     }
 
-    public void changeName(String name){
+    public void setName(String name){
         this.name = name;
     }
 

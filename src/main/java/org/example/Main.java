@@ -20,8 +20,11 @@ public class Main {
         username = scanner.nextLine();
 
         User user = new User(username);
+        System.out.println(user.toString());
         alleUser.add(user);
         currentUser.add(user);
+
+
 
         checkinstanz(username, scanner, alleUser, currentUser);
     }
